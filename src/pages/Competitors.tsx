@@ -185,17 +185,17 @@ const CompetitorCard = ({ competitor }: { competitor: Competitor }) => {
   );
 };
 
-const Input = ({ label, ...props }: any) => (
+const Input = ({ label, onChange, ...props }: any) => (
   <div className="space-y-1">
     <label className="text-xs font-bold text-slate-500 uppercase ml-1">{label}</label>
-    <input {...props} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all text-sm" />
+    <input {...props} onChange={e => onChange?.(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all text-sm" />
   </div>
 );
 
-const Textarea = ({ label, ...props }: any) => (
+const Textarea = ({ label, onChange, ...props }: any) => (
   <div className="space-y-1">
     <label className="text-xs font-bold text-slate-500 uppercase ml-1">{label}</label>
-    <textarea {...props} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all text-sm min-h-24" />
+    <textarea {...props} onChange={e => onChange?.(e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all text-sm min-h-24" />
   </div>
 );
 
