@@ -32,6 +32,13 @@ async function startServer() {
     res.json({ id, name, website });
   });
 
+  app.delete("/api/competitors/:id", (req, res) => {
+    const { id } = req.params;
+    db.prepare("DELETE FROM analyses WHERE competitor_id = ?").run(id);
+    db.prepare("DELETE FROM competitors WHERE id = ?").run(id);
+    res.json({ success: true });
+  });
+
   app.get("/api/analyses/:competitorId", (req, res) => {
     const analyses = db.prepare("SELECT * FROM analyses WHERE competitor_id = ? ORDER BY created_at DESC").all(req.params.competitorId);
     res.json(analyses);

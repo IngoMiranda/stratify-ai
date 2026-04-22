@@ -46,6 +46,12 @@ export default function Competitors() {
     fetchCompetitors();
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm('Tem certeza que deseja excluir este concorrente?')) return;
+    await fetch(`/api/competitors/${id}`, { method: 'DELETE' });
+    fetchCompetitors();
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -93,7 +99,7 @@ export default function Competitors() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {competitors.map((comp) => (
-          <CompetitorCard key={comp.id} competitor={comp} />
+          <CompetitorCard key={comp.id} competitor={comp} onDelete={() => handleDelete(comp.id)} />
         ))}
       </div>
 
@@ -107,7 +113,7 @@ export default function Competitors() {
   );
 }
 
-const CompetitorCard = ({ competitor }: { competitor: Competitor }) => {
+const CompetitorCard = ({ competitor, onDelete }: { competitor: Competitor, onDelete: () => void }) => {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<string | null>(null);
 
@@ -148,7 +154,7 @@ const CompetitorCard = ({ competitor }: { competitor: Competitor }) => {
         <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
           <Globe size={20} />
         </div>
-        <button className="text-slate-300 hover:text-slate-600"><MoreVertical size={18}/></button>
+        <button onClick={onDelete} className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 size={18}/></button>
       </div>
 
       <h3 className="text-lg font-bold text-slate-800 mb-1">{competitor.name}</h3>
